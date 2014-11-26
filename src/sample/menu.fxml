@@ -21,12 +21,12 @@
   </rowConstraints>
    <children>
        <fx:define>
-           <ToggleGroup fx:id="enemy"></ToggleGroup>
+           <ToggleGroup fx:id="enemy"/>
        </fx:define>
-      <Slider max="30.0" min="5.0" showTickLabels="true"  blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
-      <Slider max="6.0" min="2.0" showTickLabels="true" value="2.0"  blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
-      <RadioButton selected="true" toggleGroup="$enemy" mnemonicParsing="false" prefHeight="38.0" prefWidth="89.0" text="2 Player" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
-      <RadioButton toggleGroup="$enemy" mnemonicParsing="false" text="Ki" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
+      <Slider fx:id="fieldsSlider" max="30.0" min="5.0" showTickLabels="true"  blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="1" />
+      <Slider fx:id="colorsSlider" max="6.0" min="2.0" showTickLabels="true" value="2.0"  blockIncrement="1.0" majorTickUnit="1.0" minorTickCount="1" showTickMarks="true" snapToTicks="true" GridPane.columnIndex="1" GridPane.rowIndex="3" />
+      <RadioButton fx:id="playerRadBtn" selected="true" toggleGroup="$enemy" mnemonicParsing="false" prefHeight="38.0" prefWidth="89.0" text="2 Player" GridPane.halignment="RIGHT" GridPane.rowIndex="4" />
+      <RadioButton fx:id="kiRadBtn" toggleGroup="$enemy" mnemonicParsing="false" text="Ki" GridPane.columnIndex="2" GridPane.halignment="LEFT" GridPane.rowIndex="4" />
       <Label text="Colors" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.rowIndex="2" GridPane.valignment="CENTER" />
       <Label text="Size" GridPane.columnIndex="1" GridPane.halignment="CENTER" GridPane.valignment="CENTER" />
       <Button mnemonicParsing="false" onAction="#startGame" prefHeight="41.0" prefWidth="213.0" text="Play" GridPane.columnIndex="1" GridPane.rowIndex="5" GridPane.halignment="CENTER" GridPane.valignment="CENTER"/>
