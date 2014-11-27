@@ -4,9 +4,6 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 
-import java.awt.*;
-import java.awt.Label;
-
 public class Menu {
 
     public Slider fieldsSlider;
