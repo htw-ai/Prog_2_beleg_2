@@ -1,8 +1,8 @@
 package sample;
 
-import sample.Model.ColorField;
-import sample.Model.HumanPlayer;
-import sample.Model.Player;
+import sample.model.ColorField;
+import sample.model.HumanPlayer;
+import sample.model.Player;
 
 /**
  * Created by root on 27.11.14.

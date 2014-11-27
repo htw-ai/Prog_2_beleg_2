@@ -1,4 +1,4 @@
-package sample.Model;
+package sample.model;
 
 /**
  * Created by root on 26.11.14.
