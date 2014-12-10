@@ -6,11 +6,20 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+import sample.Spielmaker;
+import sample.model.ColorField;
+import sample.model.Player;
 
 /**
  * Created by dudzik on 26.11.14.
  */
-public class Field {
+public class FieldController {
+    private Spielmaker spielmaker;
+
+    public void initData(int fieldSize, Player player, int colorsCount){
+        this.spielmaker = new Spielmaker(new ColorField[fieldSize][fieldSize], player, colorsCount);
+    }
+
     public void newGame(ActionEvent actionEvent) throws Exception{
         Node node=(Node) actionEvent.getSource();
         Stage stage=(Stage) node.getScene().getWindow();

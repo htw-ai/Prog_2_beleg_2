@@ -11,10 +11,12 @@ public class Spielmaker {
 
     private Player player1 = new HumanPlayer();
     private Player player2;
+    private int colorsCount;
 
-    public Spielmaker(ColorField[][] fields, Player enemy) {
+    public Spielmaker(ColorField[][] fields, Player enemy, int colorCount) {
         this.fields = fields;
         player2 = enemy;
+        this.colorsCount = colorsCount;
     }
 
     private void init(){
