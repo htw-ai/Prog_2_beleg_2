@@ -3,7 +3,7 @@ package sample.model;
 /**
  * Created by root on 27.11.14.
  */
-public class HumanPlayer extends Player {
+public class HumanPlayer extends sample.model.Player {
 
     @Override
     public String makeMove() {
