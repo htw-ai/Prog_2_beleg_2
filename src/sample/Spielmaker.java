@@ -1,27 +1,39 @@
 package sample;
 
+import sample.model.Color;
 import sample.model.ColorField;
 import sample.model.HumanPlayer;
 import sample.model.Player;
+
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Random;
 
 /**
  * Created by root on 27.11.14.
  */
 public class Spielmaker {
 
+    private Random rnd = new Random();
     private Player player1 = new HumanPlayer();
     private Player player2;
-    private int colorsCount;
+    private List<Color> colors;
 
     public Spielmaker(ColorField[][] fields, Player enemy, int colorCount) {
         this.fields = fields;
         player2 = enemy;
-        this.colorsCount = colorsCount;
+        player1.setActive(true);
+        initColors(colorCount);
     }
 
-    private void init(){
-
-        player1.setActive(true);
+    private void initColors(int colorCount){
+        colors = new ArrayList<Color>(colorCount);
+        for ( Color color : Color.values())
+        {
+            if(colorCount-- <= 0)
+                break;
+            colors.add(color);
+        }
     }
 
     private ColorField[][] fields;
