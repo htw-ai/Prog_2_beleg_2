@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.canvas.*?>
 <?import java.lang.*?>
 <?import java.util.*?>
 <?import javafx.scene.control.*?>
@@ -7,16 +8,7 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796"
-           maxHeight="-Infinity"
-           maxWidth="-Infinity"
-           minHeight="-Infinity"
-           minWidth="-Infinity"
-           prefHeight="400.0"
-           prefWidth="600.0"
-           xmlns:fx="http://javafx.com/fxml/1"
-           xmlns="http://javafx.com/javafx/8"
-           fx:controller="sample.controller.FieldController">
+<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.FieldController">
   <items>
     <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
          <children>
@@ -47,7 +39,7 @@
                         <Label layoutX="29.0" layoutY="79.0" text="0" GridPane.rowIndex="1" />
                      </children>
                   </GridPane>
-                  <ListView prefHeight="300.0" prefWidth="260.0" GridPane.rowIndex="2" />
+                  <ListView fx:id="colorList" prefHeight="300.0" prefWidth="260.0" GridPane.rowIndex="2" />
                </children>
             </GridPane>
          </children></AnchorPane>

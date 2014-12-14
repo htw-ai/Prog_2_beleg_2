@@ -1,12 +1,17 @@
 package sample.controller;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
+import javafx.collections.transformation.FilteredList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.ListView;
 import javafx.stage.Stage;
 import sample.Spielmaker;
+import sample.model.Color;
 import sample.model.ColorField;
 import sample.model.Player;
 
@@ -15,11 +20,13 @@ import sample.model.Player;
  */
 public class FieldController {
     private Spielmaker spielmaker;
-
+    public ListView colorList;
 
     public void initData(int fieldSize, Player player, int colorsCount){
         this.spielmaker = new Spielmaker(new ColorField[fieldSize][fieldSize], player, colorsCount);
-
+        ObservableList<Color> colors = FXCollections.observableArrayList();
+        colors.addAll(spielmaker.getColors());
+        colorList.setItems(colors);
     }
 
     public void newGame(ActionEvent actionEvent) throws Exception{
@@ -30,8 +37,4 @@ public class FieldController {
         stage.setScene(scene);
         stage.show();
     }
-
-
-
-
 }

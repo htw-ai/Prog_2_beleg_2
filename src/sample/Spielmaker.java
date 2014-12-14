@@ -18,8 +18,6 @@ public class Spielmaker {
     private Random rnd = new Random();
     private Player player1 = new HumanPlayer();
     private Player player2;
-
-
     private List<Color> colors;
 
     public Spielmaker(ColorField[][] fields, Player enemy, int colorCount) {
@@ -43,11 +41,12 @@ public class Spielmaker {
         return fields;
     }
 
-    public void chooseColor(){
+    public void chooseColor(Color newColor){
         Color activeColor = fields[0][0].getColor();
         for (int x = 0; x < fields.length; x++){
-            for (int y = 0; y < fields.length; y++){
-
+            for (int y = 0; y < fields[x].length; y++){
+                if(fields[x][y].getColor() == activeColor)
+                    fields[x][y].setColor(newColor);
             }
         }
     }
