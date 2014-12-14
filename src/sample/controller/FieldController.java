@@ -16,8 +16,10 @@ import sample.model.Player;
 public class FieldController {
     private Spielmaker spielmaker;
 
+
     public void initData(int fieldSize, Player player, int colorsCount){
         this.spielmaker = new Spielmaker(new ColorField[fieldSize][fieldSize], player, colorsCount);
+
     }
 
     public void newGame(ActionEvent actionEvent) throws Exception{
@@ -28,4 +30,8 @@ public class FieldController {
         stage.setScene(scene);
         stage.show();
     }
+
+
+
+
 }

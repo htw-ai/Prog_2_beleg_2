@@ -14,9 +14,12 @@ import java.util.Random;
  */
 public class Spielmaker {
 
+    private ColorField[][] fields;
     private Random rnd = new Random();
     private Player player1 = new HumanPlayer();
     private Player player2;
+
+
     private List<Color> colors;
 
     public Spielmaker(ColorField[][] fields, Player enemy, int colorCount) {
@@ -36,14 +39,17 @@ public class Spielmaker {
         }
     }
 
-    private ColorField[][] fields;
-
     public ColorField[][] getFields() {
         return fields;
     }
 
-    public void setFields(ColorField[][] fields) {
-        this.fields = fields;
+    public void chooseColor(){
+        Color activeColor = fields[0][0].getColor();
+        for (int x = 0; x < fields.length; x++){
+            for (int y = 0; y < fields.length; y++){
+
+            }
+        }
     }
 
     public void switchActivePlayer(){
@@ -52,5 +58,9 @@ public class Spielmaker {
 
     public Player getActivePlayer(){
         return player1.isActive() ? player1 : player2;
+    }
+
+    public List<Color> getColors() {
+        return colors;
     }
 }

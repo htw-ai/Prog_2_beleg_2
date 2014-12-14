@@ -4,17 +4,17 @@ package sample.model;
  * Created by root on 26.11.14.
  */
 public class ColorField {
-    private String color;
+    private Color color;
 
-    public ColorField(String color) {
+    public ColorField(Color color) {
         this.color = color;
     }
 
-    public String getColor() {
+    public Color getColor() {
         return color;
     }
 
-    public void setColor(String color) {
+    public void setColor(Color color) {
         this.color = color;
     }
 
