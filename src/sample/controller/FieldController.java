@@ -19,7 +19,6 @@ public class FieldController {
 
     public void initData(int fieldSize, Player player, int colorsCount){
         this.spielmaker = new Spielmaker(new ColorField[fieldSize][fieldSize], player, colorsCount);
-
     }
 
     public void newGame(ActionEvent actionEvent) throws Exception{
