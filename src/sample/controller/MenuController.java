@@ -9,7 +9,6 @@ import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleGroup;
-import javafx.scene.layout.Pane;
 import javafx.stage.Stage;
 import sample.model.HumanPlayer;
 import sample.model.Player;
@@ -42,7 +41,7 @@ public class MenuController {
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/field.fxml"));
         stage.setScene(new Scene((SplitPane) loader.load()));
         FieldController controller = loader.getController();
-        controller.initData(fieldsCount, player, colorsCount);
+        controller.init(fieldsCount, player, colorsCount);
 
         stage.show();
 

@@ -8,11 +8,11 @@
 <?import javafx.scene.paint.*?>
 <?import javafx.scene.text.*?>
 
-<SplitPane dividerPositions="0.29797979797979796" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.FieldController">
+<SplitPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/8" xmlns:fx="http://javafx.com/fxml/1" fx:controller="sample.controller.FieldController">
   <items>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0">
-         <children>
-            <GridPane layoutX="20.0" prefHeight="400.0" prefWidth="174.0">
+      <BorderPane prefHeight="200.0" prefWidth="200.0">
+         <left>
+            <GridPane prefHeight="400.0" prefWidth="174.0" BorderPane.alignment="CENTER">
               <columnConstraints>
                 <ColumnConstraints hgrow="SOMETIMES" minWidth="10.0" prefWidth="100.0" />
               </columnConstraints>
@@ -42,7 +42,21 @@
                   <ListView fx:id="colorList" prefHeight="300.0" prefWidth="260.0" GridPane.rowIndex="2" />
                </children>
             </GridPane>
-         </children></AnchorPane>
-    <AnchorPane minHeight="0.0" minWidth="0.0" prefHeight="160.0" prefWidth="100.0" />
+         </left>
+         <center>
+            <GridPane BorderPane.alignment="CENTER" fx:id="playingField">
+              <columnConstraints>
+                <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" />
+                <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" />
+                <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" />
+              </columnConstraints>
+              <rowConstraints>
+                <RowConstraints fillHeight="" vgrow="SOMETIMES" />
+                <RowConstraints fillHeight="" vgrow="SOMETIMES" />
+                <RowConstraints fillHeight="" vgrow="SOMETIMES" />
+              </rowConstraints>
+            </GridPane>
+         </center>
+      </BorderPane>
   </items>
 </SplitPane>

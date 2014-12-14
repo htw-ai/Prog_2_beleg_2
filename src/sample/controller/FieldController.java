@@ -9,6 +9,7 @@ import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.ListView;
+import javafx.scene.layout.GridPane;
 import javafx.stage.Stage;
 import sample.Spielmaker;
 import sample.model.Color;
@@ -21,12 +22,17 @@ import sample.model.Player;
 public class FieldController {
     private Spielmaker spielmaker;
     public ListView colorList;
+    public GridPane playingField;
 
-    public void initData(int fieldSize, Player player, int colorsCount){
+    public void init(int fieldSize, Player player, int colorsCount){
         this.spielmaker = new Spielmaker(new ColorField[fieldSize][fieldSize], player, colorsCount);
         ObservableList<Color> colors = FXCollections.observableArrayList();
         colors.addAll(spielmaker.getColors());
         colorList.setItems(colors);
+        initUI();
+    }
+
+    private void initUI(){
     }
 
     public void newGame(ActionEvent actionEvent) throws Exception{
