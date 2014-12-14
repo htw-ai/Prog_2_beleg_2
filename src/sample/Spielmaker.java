@@ -1,7 +1,6 @@
 package sample;
 
 import sample.model.Color;
-import sample.model.ColorField;
 import sample.model.HumanPlayer;
 import sample.model.Player;
 
@@ -14,26 +13,27 @@ import java.util.Random;
  */
 public class Spielmaker {
 
-    private ColorField[][] fields;
+    private Color[][] fields;
     private Random rnd = new Random();
     private Player player1 = new HumanPlayer();
     private Player player2;
     private List<Color> colors;
 
-    public Spielmaker(ColorField[][] fields, Player enemy, int colorCount) {
-        this.fields = fields;
+    public Spielmaker(int fieldCount, Player enemy, int colorCount) {
         player2 = enemy;
         player1.setActive(true);
         initColors(colorCount);
-        setFieldColors(colorCount);
+        this.fields = generateFieldColors(colorCount, fieldCount);
     }
 
-    private void setFieldColors(int colorCount) {
-        for (int i = 0; i < fields.length; i++) {
-            for (int j = 0; j < fields[i].length; j++) {
-                fields[i][j].setColor(colors.get(rnd.nextInt(colorCount)));
+    private Color[][] generateFieldColors(int colorCount, int fieldCount) {
+        Color[][] field = new Color[fieldCount][fieldCount];
+        for (int i = 0; i < fieldCount; i++) {
+            for (int j = 0; j < fieldCount; j++) {
+                field[i][j] = colors.get(rnd.nextInt(colorCount));
             }
         }
+        return field;
     }
 
     private void initColors(int colorCount){
@@ -46,16 +46,16 @@ public class Spielmaker {
         }
     }
 
-    public ColorField[][] getFields() {
+    public Color[][] getFields() {
         return fields;
     }
 
     public void chooseColor(Color newColor){
-        Color activeColor = fields[0][0].getColor();
+        Color activeColor = fields[0][0];
         for (int x = 0; x < fields.length; x++){
             for (int y = 0; y < fields[x].length; y++){
-                if(fields[x][y].getColor() == activeColor)
-                    fields[x][y].setColor(newColor);
+                if(fields[x][y] == activeColor)
+                    fields[x][y] = newColor;
             }
         }
     }
