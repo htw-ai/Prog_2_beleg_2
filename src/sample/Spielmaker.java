@@ -25,6 +25,15 @@ public class Spielmaker {
         player2 = enemy;
         player1.setActive(true);
         initColors(colorCount);
+        setFieldColors(colorCount);
+    }
+
+    private void setFieldColors(int colorCount) {
+        for (int i = 0; i < fields.length; i++) {
+            for (int j = 0; j < fields[i].length; j++) {
+                fields[i][j].setColor(colors.get(rnd.nextInt(colorCount)));
+            }
+        }
     }
 
     private void initColors(int colorCount){
