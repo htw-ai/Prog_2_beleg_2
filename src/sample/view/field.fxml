@@ -46,33 +46,7 @@
             </GridPane>
          </left>
          <center>
-            <GridPane BorderPane.alignment="CENTER" fx:id="playingField">
-              <!--<columnConstraints>
-                <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" />
-                <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" />
-                <ColumnConstraints hgrow="SOMETIMES" fillWidth="true" />
-              </columnConstraints>
-              <rowConstraints>
-                <RowConstraints fillHeight="" vgrow="SOMETIMES" />
-                <RowConstraints fillHeight="" vgrow="SOMETIMES" />
-                <RowConstraints fillHeight="" vgrow="SOMETIMES" />
-              </rowConstraints>-->
-
-                <!--
-                <Canvas GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-background-color: red"/>
-                <TextField text="test" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-background-color: red"/>
-                -->
-                <!--
-                <TextField text="test" GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-background-color: red"/>
-                <Pane GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-background-color: blue"/>
-                -->
-                <!--<Pane GridPane.columnIndex="1" GridPane.rowIndex="1" style="-fx-background-color: blue" />-->
-            </GridPane>
-            <!--
-            <TilePane fx:id="playingField2">
-
-             </TilePane>
-             -->
+            <GridPane BorderPane.alignment="CENTER" fx:id="playingField"/>
          </center>
       </BorderPane>
   </items>
