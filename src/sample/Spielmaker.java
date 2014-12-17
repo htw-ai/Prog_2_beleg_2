@@ -1,9 +1,6 @@
 package sample;
 
-import sample.model.Color;
-import sample.model.ColorKey;
-import sample.model.HumanPlayer;
-import sample.model.Player;
+import sample.model.*;
 
 import java.util.*;
 
@@ -12,7 +9,7 @@ import java.util.*;
  */
 public class Spielmaker {
 
-    private Color[][] fields;
+    private ColorField[][] fields;
 
     private List<ColorKey> activeColors;
     //private Map<ColorKey, Color> activeColors;
@@ -31,6 +28,7 @@ public class Spielmaker {
         activeColors = new ArrayList<ColorKey>(){{
             add(new ColorKey(0, 0));
         }};
+        chooseColor(fields[0][0].getColor());
     }
 
     private void initColors(int colorCount){
@@ -43,72 +41,56 @@ public class Spielmaker {
         }
     }
 
-    private Color[][] generateFieldColors(int fieldCount, int colorCount) {
-        Color[][] field = new Color[fieldCount][fieldCount];
+    private ColorField[][] generateFieldColors(int fieldCount, int colorCount) {
+        ColorField[][] field = new ColorField[fieldCount][fieldCount];
         for (int x = 0; x < fieldCount; x++) {
             for (int y = 0; y < fieldCount; y++) {
-                field[x][y] = colors.get(rnd.nextInt(colorCount));
+                field[x][y] = new ColorField(colors.get(rnd.nextInt(colorCount)));
             }
         }
+        field[0][0].setActive(true);
         return field;
     }
 
     public int chooseColor(Color newColor){
-        List<ColorKey>  newFields = new ArrayList<>();
+        List<ColorKey> newFields = new ArrayList<>();
 
         for (int i = 0; i < activeColors.size(); i++) {
             ColorKey key = activeColors.get(i);
-            fields[key.getX()][key.getY()] = newColor;
+            fields[key.getX()][key.getY()].setColor(newColor);
 //            compareNeighbors(key.getX(), key.getY(), newColor)
             newFields.addAll(compareNeighbors(key.getX(), key.getY(), newColor));
         }
 
-        /*
-        for(Iterator<ColorKey> it = activeColors.iterator(); it.hasNext(); ) {
-            ColorKey key = it.next();
-            fields[key.getX()][key.getY()] = newColor;
-            newFields.addAll(compareNeighbors(key.getX(), key.getY(), newColor));
-        }*/
-
         System.out.println(newFields.size() + " new field(s) with color " + newColor.name());
-        for (ColorKey key : newFields){
-            //activeColors.put(key, newColor);
-            fields[key.getX()][key.getY()] = newColor;
-        }
+//        for (ColorKey key : newFields){
+//            //activeColors.put(key, newColor);
+//            //ToDo: just in the first round:
+//            fields[key.getX()][key.getY()].setColor(newColor);
+//        }
 
         return newFields.size();
     }
 
-  /*  private List<ColorKey> recListAppender(List<ColorKey> fields2){
-
-
-
-        for(Iterator<ColorKey> it = fields2.iterator(); it.hasNext(); ) {
-            ColorKey key = it.next();
-            fields[key.getX()][key.getY()] = newColor;
-            newFields.addAll(compareNeighbors(key.getX(), key.getY(), newColor));
-        }
-    }*/
-
     private List<ColorKey> compareNeighbors(final int x, final int y, final Color c){
         ColorKey checkedKey;
         List<ColorKey> newKeys = new ArrayList<>();
-        if (x != 0) { // not top
+        if (x != 0) { // top
             checkedKey = addOnEqualColors(x - 1, y, c);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
-        if (y != 0) { // not left
+        if (y != 0) { // left
             checkedKey = addOnEqualColors(x, y - 1, c);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
-        if (x != fields.length -1) { // not bottom
+        if (x != fields.length -1) { // bottom
             checkedKey = addOnEqualColors(x + 1, y, c);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
-        if (y != fields[x].length -1) { // not right
+        if (y != fields[x].length -1) { // right
             checkedKey = addOnEqualColors(x, y + 1, c);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
@@ -117,9 +99,13 @@ public class Spielmaker {
     }
 
     private ColorKey addOnEqualColors(int posX, int posY, Color c){
-        if (fields[posX][posY].name().equals(c.name())) {
-            ColorKey key = new ColorKey(posX, posY);
-            if (!activeColors.contains(key)){
+        ColorField cf = fields[posX][posY];
+        if (cf.getColor().name().equals(c.name())) {
+            //ColorKey key = new ColorKey(posX, posY);
+            if (!cf.isActive()){
+                //activeColors.add(key);
+                cf.setActive(true);
+                ColorKey key = new ColorKey(posX, posY);
                 activeColors.add(key);
                 return key;
             }
@@ -137,7 +123,7 @@ public class Spielmaker {
         return player1.isActive() ? player1 : player2;
     }
 
-    public Color[][] getFields() {
+    public ColorField[][] getFields() {
         return fields;
     }
 

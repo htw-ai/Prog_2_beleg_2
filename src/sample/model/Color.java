@@ -17,7 +17,7 @@ public enum Color {
         this.color = color;
     }
 
-    public javafx.scene.paint.Color getColor() {
+    public javafx.scene.paint.Color getFill() {
         return color;
     }
 }
