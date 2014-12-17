@@ -1,31 +1,19 @@
 package sample.controller;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
-import javafx.event.EventHandler;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
-import javafx.scene.canvas.Canvas;
-import javafx.scene.control.Control;
-import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.control.TextField;
-import javafx.scene.input.InputEvent;
 import javafx.scene.layout.*;
-import javafx.scene.shape.Circle;
 import javafx.scene.shape.Rectangle;
-import javafx.scene.text.Text;
 import javafx.stage.Stage;
 import sample.Spielmaker;
 import sample.model.Color;
 import sample.model.Player;
-
-import javax.swing.event.ListSelectionEvent;
 
 
 /**
@@ -53,9 +41,7 @@ public class FieldController {
                 (ov, old_val, new_val) -> {
                     Color newColor = (Color) new_val;
                     System.out.println("Color changed to " + newColor.name());
-                    synchronized (newColor){
-                        spielmaker.chooseColor(newColor);
-                    }
+                    spielmaker.chooseColor(newColor);
                     refreshPlayingField();
                     spielmaker.switchActivePlayer();
                 });
@@ -74,7 +60,7 @@ public class FieldController {
                 Rectangle rectangel = new Rectangle(tileSize, tileSize);
                 rectangel.setTranslateY(y * tileSize);
                 rectangel.setTranslateX(x * tileSize);
-                rectangel.setFill(spielmaker.getFields()[x][y].getColor());
+                rectangel.setFill(spielmaker.getFields()[x][y].getColor().getFill());
                 playingField.getChildren().add(rectangel);
             }
         }
