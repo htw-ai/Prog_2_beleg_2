@@ -4,6 +4,7 @@ package sample.model;
  * Created by root on 17.12.14.
  */
 public class ColorField {
+    private ColorKey key;
     private Color color;
     private boolean active;
 
@@ -25,5 +26,13 @@ public class ColorField {
 
     public void setActive(boolean active) {
         this.active = active;
+    }
+
+    public ColorKey getKey() {
+        return key;
+    }
+
+    public void setKey(ColorKey key) {
+        this.key = key;
     }
 }

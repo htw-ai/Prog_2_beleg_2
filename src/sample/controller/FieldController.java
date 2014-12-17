@@ -41,7 +41,7 @@ public class FieldController {
                 (ov, old_val, new_val) -> {
                     Color newColor = (Color) new_val;
                     System.out.println("Color changed to " + newColor.name());
-                    spielmaker.chooseColor(newColor);
+                    spielmaker.chooseColor(newColor, false);
                     refreshPlayingField();
                     spielmaker.switchActivePlayer();
                 });

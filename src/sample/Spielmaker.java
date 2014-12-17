@@ -24,11 +24,10 @@ public class Spielmaker {
         initColors(colorCount);
         this.fields = generateFieldColors(fieldCount, colorCount);
         // put the first field into activeColors
-        // ToDo: put equal neighbors also into the map!
         activeColors = new ArrayList<ColorKey>(){{
             add(new ColorKey(0, 0));
         }};
-        chooseColor(fields[0][0].getColor());
+        chooseColor(fields[0][0].getColor(), false);
     }
 
     private void initColors(int colorCount){
@@ -52,63 +51,59 @@ public class Spielmaker {
         return field;
     }
 
-    public int chooseColor(Color newColor){
-        List<ColorKey> newFields = new ArrayList<>();
+    public int chooseColor(Color newColor, boolean isTest){
+        int newFieldsCounter = 0;
 
         for (int i = 0; i < activeColors.size(); i++) {
             ColorKey key = activeColors.get(i);
-            fields[key.getX()][key.getY()].setColor(newColor);
-//            compareNeighbors(key.getX(), key.getY(), newColor)
-            newFields.addAll(compareNeighbors(key.getX(), key.getY(), newColor));
+            List<ColorField> neighbors = getNeighborsWithColor(key.getX(), key.getY(), newColor);
+
+            if (!isTest) {
+                neighbors.stream().forEach(k -> {
+                    k.setActive(true);
+                    activeColors.add(k.getKey());
+                });
+                fields[key.getX()][key.getY()].setColor(newColor);
+            }
+
+            newFieldsCounter += neighbors.size();
         }
 
-        System.out.println(newFields.size() + " new field(s) with color " + newColor.name());
-//        for (ColorKey key : newFields){
-//            //activeColors.put(key, newColor);
-//            //ToDo: just in the first round:
-//            fields[key.getX()][key.getY()].setColor(newColor);
-//        }
-
-        return newFields.size();
+        System.out.println(newFieldsCounter + " new field(s) with color " + newColor.name());
+        return newFieldsCounter;
     }
 
-    private List<ColorKey> compareNeighbors(final int x, final int y, final Color c){
-        ColorKey checkedKey;
-        List<ColorKey> newKeys = new ArrayList<>();
+    private List<ColorField> getNeighborsWithColor(final int x, final int y, final Color color){
+        ColorField checkedKey;
+        List<ColorField> newKeys = new ArrayList<>();
         if (x != 0) { // top
-            checkedKey = addOnEqualColors(x - 1, y, c);
+            checkedKey = checkColorField(x - 1, y, color);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
         if (y != 0) { // left
-            checkedKey = addOnEqualColors(x, y - 1, c);
+            checkedKey = checkColorField(x, y - 1, color);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
         if (x != fields.length -1) { // bottom
-            checkedKey = addOnEqualColors(x + 1, y, c);
+            checkedKey = checkColorField(x + 1, y, color);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
         if (y != fields[x].length -1) { // right
-            checkedKey = addOnEqualColors(x, y + 1, c);
+            checkedKey = checkColorField(x, y + 1, color);
             if (checkedKey != null)
                 newKeys.add(checkedKey);
         }
         return newKeys;
     }
 
-    private ColorKey addOnEqualColors(int posX, int posY, Color c){
+    private ColorField checkColorField(int posX, int posY, Color color){
         ColorField cf = fields[posX][posY];
-        if (cf.getColor().name().equals(c.name())) {
-            //ColorKey key = new ColorKey(posX, posY);
-            if (!cf.isActive()){
-                //activeColors.add(key);
-                cf.setActive(true);
-                ColorKey key = new ColorKey(posX, posY);
-                activeColors.add(key);
-                return key;
-            }
+        if (cf.getColor().name().equals(color.name()) && !cf.isActive()) {
+            cf.setKey(new ColorKey(posX, posY));
+            return cf;
         }
         return null;
     }
