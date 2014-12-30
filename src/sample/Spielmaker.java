@@ -9,25 +9,28 @@ import java.util.*;
  */
 public class Spielmaker {
 
-    private ColorField[][] fields;
-
-    private List<ColorKey> activeColors;
-    //private Map<ColorKey, Color> activeColors;
     private Random rnd = new Random();
+
+    private ColorField[][] fields;
     private Player player1 = new HumanPlayer();
     private Player player2;
     private List<Color> colors;
 
     public Spielmaker(int fieldCount, Player enemy, int colorCount) {
-        player2 = enemy;
-        player1.setActive(true);
         initColors(colorCount);
         this.fields = generateFieldColors(fieldCount, colorCount);
+        player2 = enemy;
+        player1.setActive(true);
         // put the first field into activeColors
-        activeColors = new ArrayList<ColorKey>(){{
-            add(new ColorKey(0, 0));
-        }};
+        player1.initColorsHold(fields[0][0]);
+        player2.initColorsHold(fields[fieldCount -1][fieldCount -1 ]);
+//        activeColors = new ArrayList<ColorKey>(){{
+//            add(fields[0][0].getKey());
+//        }};
         chooseColor(fields[0][0].getColor(), false);
+        switchActivePlayer();
+        chooseColor(fields[fieldCount -1][fieldCount -1 ].getColor(), false);
+        switchActivePlayer();
     }
 
     private void initColors(int colorCount){
@@ -45,32 +48,50 @@ public class Spielmaker {
         for (int x = 0; x < fieldCount; x++) {
             for (int y = 0; y < fieldCount; y++) {
                 field[x][y] = new ColorField(colors.get(rnd.nextInt(colorCount)));
+                field[x][y].setKey(new ColorKey(x, y));
             }
         }
         field[0][0].setActive(true);
         return field;
     }
 
-    public int chooseColor(Color newColor, boolean isTest){
-        int newFieldsCounter = 0;
+    /**
+     * returns the points a player receives when choosing a certain color.
+     * Can also update the fields on the edge of a players field range.
+     *
+     * @param newColor  the chosen color
+     * @param isTest    if true, updates the UI
+     * @return points a player receives for this certain color
+     */
+    public List<ColorField> chooseColor(Color newColor, boolean isTest){
+        List<ColorField> newFields = new ArrayList<>();
 
-        for (int i = 0; i < activeColors.size(); i++) {
-            ColorKey key = activeColors.get(i);
+        for (int i = 0; i < getActivePlayer().getColorsHold().size(); i++) {
+            ColorKey key = getActivePlayer().getColorsHold().get(i).getKey();
             List<ColorField> neighbors = getNeighborsWithColor(key.getX(), key.getY(), newColor);
-
+            newFields.addAll(neighbors);
             if (!isTest) {
                 neighbors.stream().forEach(k -> {
                     k.setActive(true);
-                    activeColors.add(k.getKey());
+                    getActivePlayer().getColorsHold().add(k);
+                    // activeColors.add(k.getKey());
                 });
                 fields[key.getX()][key.getY()].setColor(newColor);
             }
 
-            newFieldsCounter += neighbors.size();
+            //newFieldsCounter += neighbors.size();
         }
 
-        System.out.println(newFieldsCounter + " new field(s) with color " + newColor.name());
-        return newFieldsCounter;
+        System.out.println(newFields.size() + " consumable field(s) with color " + newColor.name());
+        return newFields;
+    }
+
+    public void setFieldsActive(List<ColorField> fields){
+        fields.stream().forEach(k -> {
+            k.setActive(true);
+            getActivePlayer().getColorsHold().add(k);
+            //activeColors.add(k.getKey());
+        });
     }
 
     private List<ColorField> getNeighborsWithColor(final int x, final int y, final Color color){
@@ -124,5 +145,13 @@ public class Spielmaker {
 
     public List<Color> getColors() {
         return colors;
+    }
+
+    public Player getPlayer1() {
+        return player1;
+    }
+
+    public Player getPlayer2() {
+        return player2;
     }
 }

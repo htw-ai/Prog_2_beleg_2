@@ -7,6 +7,7 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.*;
 import javafx.scene.shape.Rectangle;
@@ -20,6 +21,8 @@ import sample.model.Player;
  * Created by dudzik on 26.11.14.
  */
 public class FieldController {
+    public Label scoreP2;
+    public Label scoreP1;
     private Spielmaker spielmaker;
     public ListView colorList;
     public GridPane playingField;
@@ -39,14 +42,24 @@ public class FieldController {
 
         colorList.getSelectionModel().selectedItemProperty().addListener(
                 (ov, old_val, new_val) -> {
+                    Player p = spielmaker.getActivePlayer();
                     Color newColor = (Color) new_val;
                     System.out.println("Color changed to " + newColor.name());
+                    //int points = spielmaker.chooseColor(newColor, false).size();
+                    //p.addPoints(points);
                     spielmaker.chooseColor(newColor, false);
+
                     refreshPlayingField();
+                    refreshPlayerScore();
                     spielmaker.switchActivePlayer();
                 });
 
         refreshPlayingField();
+    }
+
+    private void refreshPlayerScore(){
+        scoreP1.setText(String.valueOf(spielmaker.getPlayer1().getPoints()));
+        scoreP2.setText(String.valueOf(spielmaker.getPlayer2().getPoints()));
     }
 
     /**
