@@ -9,12 +9,14 @@ import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import sample.Spielmaker;
+import sample.exceptions.GameOverException;
 import sample.model.Color;
-import sample.model.Player;
+import sample.model.player.ArtificialPlayer;
+import sample.model.player.Player;
 
 
 /**
@@ -23,6 +25,8 @@ import sample.model.Player;
 public class FieldController {
     public Label scoreP2;
     public Label scoreP1;
+    public Rectangle playerTwoBackground;
+    public Rectangle playerOneBackground;
     private Spielmaker spielmaker;
     public ListView colorList;
     public GridPane playingField;
@@ -42,25 +46,40 @@ public class FieldController {
 
         colorList.getSelectionModel().selectedItemProperty().addListener(
                 (ov, old_val, new_val) -> {
-                    Player p = spielmaker.getActivePlayer();
                     Color newColor = (Color) new_val;
-                    System.out.println("Color changed to " + newColor.name());
-                    //int points = spielmaker.chooseColor(newColor, false).size();
-                    //p.addPoints(points);
-                    spielmaker.chooseColor(newColor, false);
-
-                    refreshPlayingField();
-                    refreshPlayerScore();
-                    spielmaker.switchActivePlayer();
+                    letsGo(newColor);
                 });
 
         refreshPlayingField();
         refreshPlayerScore();
     }
 
+    private void letsGo(Color newColor){
+        System.out.println("Color changed to " + newColor.name());
+
+        spielmaker.chooseColor(newColor, false);
+        spielmaker.switchActivePlayer();
+
+        refreshPlayingField();
+        refreshPlayerScore();
+
+        try {
+            if (spielmaker.getActivePlayer() instanceof ArtificialPlayer){
+                Color color = spielmaker.getActivePlayer().makeMove(spielmaker.getInactivePlayer().getColorsHold().get(0).getColor());
+                //if (color != null)
+                letsGo(color);
+            }
+        } catch (GameOverException e) {
+            e.printStackTrace();
+        }
+    }
+
     private void refreshPlayerScore(){
         scoreP1.setText(String.valueOf(spielmaker.getPlayer1().getPoints()));
         scoreP2.setText(String.valueOf(spielmaker.getPlayer2().getPoints()));
+        boolean flag = spielmaker.getActivePlayer() == spielmaker.getPlayer1();
+        playerOneBackground.setVisible(flag);
+        playerTwoBackground.setVisible(!flag);
     }
 
     /**

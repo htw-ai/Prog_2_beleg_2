@@ -1,6 +1,8 @@
 package sample;
 
 import sample.model.*;
+import sample.model.player.HumanPlayer;
+import sample.model.player.Player;
 
 import java.util.*;
 
@@ -24,13 +26,11 @@ public class Spielmaker {
         // put the first field into activeColors
         player1.initColorsHold(fields[0][0]);
         player2.initColorsHold(fields[fieldCount -1][fieldCount -1 ]);
-//        activeColors = new ArrayList<ColorKey>(){{
-//            add(fields[0][0].getKey());
-//        }};
         chooseColor(fields[0][0].getColor(), false);
         switchActivePlayer();
         chooseColor(fields[fieldCount -1][fieldCount -1 ].getColor(), false);
         switchActivePlayer();
+        Player.SetSpielmaker(this);
     }
 
     private void initColors(int colorCount){
@@ -53,6 +53,13 @@ public class Spielmaker {
         }
         field[0][0].setActive(true);
         return field;
+    }
+
+    /**
+     * Runs the chooseColor method as a test
+     */
+    public List<ColorField> testColor(Color newColor){
+        return chooseColor(newColor, true);
     }
 
     /**
@@ -84,13 +91,13 @@ public class Spielmaker {
         return newFields;
     }
 
-    public void setFieldsActive(List<ColorField> fields){
-        fields.stream().forEach(k -> {
-            k.setActive(true);
-            getActivePlayer().getColorsHold().add(k);
-            //activeColors.add(k.getKey());
-        });
-    }
+//    public void setFieldsActive(List<ColorField> fields){
+//        fields.stream().forEach(k -> {
+//            k.setActive(true);
+//            getActivePlayer().getColorsHold().add(k);
+//            //activeColors.add(k.getKey());
+//        });
+//    }
 
     private List<ColorField> getNeighborsWithColor(final int x, final int y, final Color color){
         ColorField checkedKey;
@@ -135,6 +142,10 @@ public class Spielmaker {
 
     public Player getActivePlayer(){
         return player1.isActive() ? player1 : player2;
+    }
+
+    public Player getInactivePlayer(){
+        return !player1.isActive() ? player1 : player2;
     }
 
     public ColorField[][] getFields() {

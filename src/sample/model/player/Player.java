@@ -1,4 +1,9 @@
-package sample.model;
+package sample.model.player;
+
+import sample.Spielmaker;
+import sample.exceptions.GameOverException;
+import sample.model.Color;
+import sample.model.ColorField;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -8,37 +13,25 @@ import java.util.List;
  */
 public abstract class Player {
 
-    private int moves;
-    private int points;
+    protected static Spielmaker spielmaker;
+
     private boolean isActive;
-    private List<ColorField> colorsHold;
+    protected List<ColorField> colorsHold;
 
     /**
      * returns the chosen color
      *
      * @return
      */
-    public abstract String makeMove();
+    public abstract Color makeMove(Color opponentsColor) throws GameOverException;
 
-    public int getMoves() {
-        return moves;
-    }
-
-    public void setMoves(int moves) {
-        this.moves = moves;
+    public static void SetSpielmaker(Spielmaker spielmaker) {
+        Player.spielmaker = spielmaker;
     }
 
     public int getPoints() {
         return colorsHold.size();
     }
-
-//    public void addPoints(int p){
-//        points += p;
-//    }
-//
-//    public void setPoints(int points) {
-//        this.points = points;
-//    }
 
     public boolean isActive() {
         return isActive;

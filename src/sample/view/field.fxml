@@ -35,8 +35,10 @@
                         <RowConstraints minHeight="10.0" vgrow="SOMETIMES" />
                      </rowConstraints>
                      <children>
+                         <Rectangle fx:id="playerOneBackground" GridPane.columnIndex="0" GridPane.rowIndex="0" fill="yellow" visible="true" width="48" height="16" />
                          <Label layoutX="16.0" layoutY="48.0" prefHeight="16.0" prefWidth="58.0" text="Player 1" />
                          <Label fx:id="scoreP1" layoutX="29.0" layoutY="79.0" text="0" GridPane.rowIndex="1" />
+                         <Rectangle fx:id="playerTwoBackground" GridPane.columnIndex="1" GridPane.rowIndex="0" fill="yellow" visible="false" width="48" height="16" />
                          <Label layoutX="112.0" layoutY="48.0" text="Player 2" GridPane.columnIndex="1" />
                          <Label fx:id="scoreP2" layoutX="136.0" layoutY="79.0" text="0" GridPane.columnIndex="1" GridPane.rowIndex="1" />
                      </children>

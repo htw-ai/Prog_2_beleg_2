@@ -10,9 +10,10 @@ import javafx.scene.control.Slider;
 import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
-import sample.model.HumanPlayer;
-import sample.model.Player;
-import sample.model.SmartPlayer;
+import sample.model.player.EasyPlayer;
+import sample.model.player.HardPlayer;
+import sample.model.player.HumanPlayer;
+import sample.model.player.Player;
 
 public class MenuController {
 
@@ -30,9 +31,12 @@ public class MenuController {
         if (radioBtn.equals("playerRadBtn")){
             player = new HumanPlayer();
             System.out.println("multiplayer mode enabled");
-        } else if (radioBtn.equals("kiRadBtn")) {
-            player = new SmartPlayer();
-            System.out.println("ki mode enabled");
+        } else if (radioBtn.equals("easyRadBtn")) {
+            player = new HardPlayer();
+            System.out.println("easy mode enabled");
+        } else if (radioBtn.equals("hardRadBtn")) {
+            player = new EasyPlayer();
+            System.out.println("hard mode enabled");
         }
 
         Node node = (Node) actionEvent.getSource();
