@@ -55,6 +55,7 @@ public class FieldController {
                 });
 
         refreshPlayingField();
+        refreshPlayerScore();
     }
 
     private void refreshPlayerScore(){

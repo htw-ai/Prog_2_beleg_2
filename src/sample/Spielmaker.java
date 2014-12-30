@@ -73,13 +73,11 @@ public class Spielmaker {
             if (!isTest) {
                 neighbors.stream().forEach(k -> {
                     k.setActive(true);
-                    getActivePlayer().getColorsHold().add(k);
-                    // activeColors.add(k.getKey());
+                    if (!getActivePlayer().getColorsHold().contains(k))
+                        getActivePlayer().getColorsHold().add(k);
                 });
                 fields[key.getX()][key.getY()].setColor(newColor);
             }
-
-            //newFieldsCounter += neighbors.size();
         }
 
         System.out.println(newFields.size() + " consumable field(s) with color " + newColor.name());
@@ -122,7 +120,7 @@ public class Spielmaker {
 
     private ColorField checkColorField(int posX, int posY, Color color){
         ColorField cf = fields[posX][posY];
-        if (cf.getColor().name().equals(color.name()) && !cf.isActive()) {
+        if (cf.getColor().name().equals(color.name()) && !cf.isActive() && cf.isActive() == false) {
             cf.setKey(new ColorKey(posX, posY));
             return cf;
         }
