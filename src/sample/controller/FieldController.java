@@ -7,19 +7,26 @@ import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import sample.Spielmaker;
+import sample.exceptions.GameOverException;
 import sample.model.Color;
-import sample.model.Player;
+import sample.model.player.ArtificialPlayer;
+import sample.model.player.Player;
 
 
 /**
  * Created by dudzik on 26.11.14.
  */
 public class FieldController {
+    public Label scoreP2;
+    public Label scoreP1;
+    public Rectangle playerTwoBackground;
+    public Rectangle playerOneBackground;
     private Spielmaker spielmaker;
     public ListView colorList;
     public GridPane playingField;
@@ -38,15 +45,37 @@ public class FieldController {
         colorList.setItems(colors);
 
         colorList.getSelectionModel().selectedItemProperty().addListener(
-                (ov, old_val, new_val) -> {
-                    Color newColor = (Color) new_val;
-                    System.out.println("Color changed to " + newColor.name());
-                    spielmaker.chooseColor(newColor, false);
-                    refreshPlayingField();
-                    spielmaker.switchActivePlayer();
-                });
+                (ov, old_val, new_val) -> goForIt((Color) new_val));
 
         refreshPlayingField();
+        refreshPlayerScore();
+    }
+
+    private void goForIt(Color newColor){
+        try {
+            System.out.println("Color changed to " + newColor.name());
+
+            spielmaker.getActivePlayer().makeMove(newColor);
+
+            if (spielmaker.getInactivePlayer() instanceof ArtificialPlayer)
+                (spielmaker.getInactivePlayer()).makeMove(null);
+            else
+                spielmaker.switchActivePlayer();
+
+            refreshPlayingField();
+            refreshPlayerScore();
+
+        } catch (GameOverException e) {
+            e.printStackTrace();
+        }
+    }
+
+    private void refreshPlayerScore(){
+        scoreP1.setText(String.valueOf(spielmaker.getPlayer1().getPoints()));
+        scoreP2.setText(String.valueOf(spielmaker.getPlayer2().getPoints()));
+        boolean flag = spielmaker.getActivePlayer() == spielmaker.getPlayer1();
+        playerOneBackground.setVisible(flag);
+        playerTwoBackground.setVisible(!flag);
     }
 
     /**
