@@ -3,7 +3,6 @@ package sample.model.player;
 import sample.exceptions.GameOverException;
 import sample.model.Color;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -12,15 +11,14 @@ import java.util.List;
 public abstract class ArtificialPlayer extends Player {
 
     @Override
-    public Color makeMove(Color opponentsColor) throws GameOverException {
-        List<Color> colors = new ArrayList<>();
-        spielmaker.getColors().forEach(c -> colors.add(c));
+    public void makeMove(Color color) throws GameOverException {
+        makeMove();
+    }
 
-        //remove the currently active color
-        colors.remove(colorsHold.get(0).getColor());
-        colors.remove(opponentsColor);
+    public void makeMove() throws GameOverException {
+        Color c = chooseColor(getAvailableColors());
 
-        return chooseColor(colors);
+        spielmaker.chooseColor(this, c);
     }
 
     protected abstract Color chooseColor(List<Color> colors) throws GameOverException;

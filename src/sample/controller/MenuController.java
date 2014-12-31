@@ -19,7 +19,7 @@ public class MenuController {
 
     public Slider fieldsSlider;
     public Slider colorsSlider;
-    public ToggleGroup enemy;
+    public ToggleGroup opponent;
 
     @FXML
     public void startGame(ActionEvent actionEvent) throws Exception{
@@ -27,7 +27,7 @@ public class MenuController {
         int colorsCount = (int) Math.round(colorsSlider.getValue());
         Player player = null;
 
-        String radioBtn = ((RadioButton) enemy.getSelectedToggle()).getId();
+        String radioBtn = ((RadioButton) opponent.getSelectedToggle()).getId();
         if (radioBtn.equals("playerRadBtn")){
             player = new HumanPlayer();
             System.out.println("multiplayer mode enabled");

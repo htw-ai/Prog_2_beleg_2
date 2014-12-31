@@ -45,30 +45,26 @@ public class FieldController {
         colorList.setItems(colors);
 
         colorList.getSelectionModel().selectedItemProperty().addListener(
-                (ov, old_val, new_val) -> {
-                    Color newColor = (Color) new_val;
-                    letsGo(newColor);
-                });
+                (ov, old_val, new_val) -> goForIt((Color) new_val));
 
         refreshPlayingField();
         refreshPlayerScore();
     }
 
-    private void letsGo(Color newColor){
-        System.out.println("Color changed to " + newColor.name());
-
-        spielmaker.chooseColor(newColor, false);
-        spielmaker.switchActivePlayer();
-
-        refreshPlayingField();
-        refreshPlayerScore();
-
+    private void goForIt(Color newColor){
         try {
-            if (spielmaker.getActivePlayer() instanceof ArtificialPlayer){
-                Color color = spielmaker.getActivePlayer().makeMove(spielmaker.getInactivePlayer().getColorsHold().get(0).getColor());
-                //if (color != null)
-                letsGo(color);
-            }
+            System.out.println("Color changed to " + newColor.name());
+
+            spielmaker.getActivePlayer().makeMove(newColor);
+
+            if (spielmaker.getInactivePlayer() instanceof ArtificialPlayer)
+                (spielmaker.getInactivePlayer()).makeMove(null);
+            else
+                spielmaker.switchActivePlayer();
+
+            refreshPlayingField();
+            refreshPlayerScore();
+
         } catch (GameOverException e) {
             e.printStackTrace();
         }

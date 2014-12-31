@@ -23,7 +23,19 @@ public abstract class Player {
      *
      * @return
      */
-    public abstract Color makeMove(Color opponentsColor) throws GameOverException;
+    public abstract void makeMove(Color color) throws GameOverException;
+
+    protected List<Color> getAvailableColors(){
+        List<Color> colors = new ArrayList<>();
+        spielmaker.getColors().forEach(c -> colors.add(c));
+
+        //remove the currently active color
+        colors.remove(colorsHold.get(0).getColor());
+        //remove the currently active color of the opponent player
+        //colors.remove(spielmaker.getInactivePlayer().getColorsHold().get(0).getColor());
+
+        return colors;
+    }
 
     public static void SetSpielmaker(Spielmaker spielmaker) {
         Player.spielmaker = spielmaker;

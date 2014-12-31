@@ -26,10 +26,10 @@ public class Spielmaker {
         // put the first field into activeColors
         player1.initColorsHold(fields[0][0]);
         player2.initColorsHold(fields[fieldCount -1][fieldCount -1 ]);
-        chooseColor(fields[0][0].getColor(), false);
-        switchActivePlayer();
-        chooseColor(fields[fieldCount -1][fieldCount -1 ].getColor(), false);
-        switchActivePlayer();
+        chooseColor(player1, fields[0][0].getColor());
+        //switchActivePlayer();
+        chooseColor(player2, fields[fieldCount -1][fieldCount -1 ].getColor());
+        //switchActivePlayer();
         Player.SetSpielmaker(this);
     }
 
@@ -58,30 +58,33 @@ public class Spielmaker {
     /**
      * Runs the chooseColor method as a test
      */
-    public List<ColorField> testColor(Color newColor){
-        return chooseColor(newColor, true);
+    public List<ColorField> testColor(Player p, Color newColor){
+        return chooseColor(p, newColor, true);
     }
 
-    /**
-     * returns the points a player receives when choosing a certain color.
-     * Can also update the fields on the edge of a players field range.
-     *
-     * @param newColor  the chosen color
-     * @param isTest    if true, updates the UI
-     * @return points a player receives for this certain color
-     */
-    public List<ColorField> chooseColor(Color newColor, boolean isTest){
+    public List<ColorField> chooseColor(Player p, Color newColor){
+        return chooseColor(p, newColor, false);
+    }
+        /**
+         * returns the points a player receives when choosing a certain color.
+         * Can also update the fields on the edge of a players field range.
+         *
+         * @param newColor  the chosen color
+         * @param isTest    if true, updates the UI
+         * @return points a player receives for this certain color
+         */
+    private List<ColorField> chooseColor(Player player, Color newColor, boolean isTest){
         List<ColorField> newFields = new ArrayList<>();
 
-        for (int i = 0; i < getActivePlayer().getColorsHold().size(); i++) {
-            ColorKey key = getActivePlayer().getColorsHold().get(i).getKey();
+        for (int i = 0; i < player.getColorsHold().size(); i++) {
+            ColorKey key = player.getColorsHold().get(i).getKey();
             List<ColorField> neighbors = getNeighborsWithColor(key.getX(), key.getY(), newColor);
             newFields.addAll(neighbors);
             if (!isTest) {
                 neighbors.stream().forEach(k -> {
                     k.setActive(true);
-                    if (!getActivePlayer().getColorsHold().contains(k))
-                        getActivePlayer().getColorsHold().add(k);
+                    if (!player.getColorsHold().contains(k))
+                        player.getColorsHold().add(k);
                 });
                 fields[key.getX()][key.getY()].setColor(newColor);
             }

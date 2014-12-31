@@ -12,15 +12,15 @@ import java.util.Random;
 public class EasyPlayer extends ArtificialPlayer {
     Random rnd = new Random();
 
-    @Override
-    public Color makeMove(Color opponentsColor)throws GameOverException{
-        try {
-            Thread.sleep(1000);
-        } catch (InterruptedException e) {
-            e.printStackTrace();
-        }
-        return super.makeMove(opponentsColor);
-    }
+//    @Override
+//    public void makeMove()throws GameOverException{
+//        try {
+//            Thread.sleep(1000);
+//        } catch (InterruptedException e) {
+//            e.printStackTrace();
+//        }
+//        super.makeMove();
+//    }
 
     /**
      * Tests if the chosen color would change at least one field.
@@ -35,7 +35,7 @@ public class EasyPlayer extends ArtificialPlayer {
     @Override
     protected Color chooseColor(List<Color> colors) throws GameOverException {
         int colorIndex = getAnotherColorIndex(colors);
-        while (spielmaker.testColor(colors.get(colorIndex)).size() < 0){
+        while (spielmaker.testColor(this, colors.get(colorIndex)).size() < 0){
             if (colors.size() > 0)
                 throw new GameOverException();
             colors.remove(colors.get(colorIndex));

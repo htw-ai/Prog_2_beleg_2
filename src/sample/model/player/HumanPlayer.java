@@ -1,7 +1,7 @@
 package sample.model.player;
 
+import sample.exceptions.GameOverException;
 import sample.model.Color;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import java.util.List;
 
@@ -11,24 +11,18 @@ import java.util.List;
 public class HumanPlayer extends Player {
 
     /**
-     * do nothing
-     * @return
-     */
-    @Override
-    public Color makeMove() {
-        return null;
-    }
-
-
-    /**
-     * is never been used
+     * do nothing.
      *
-     * @param colors
      * @return
      */
     @Override
-    protected int getAnotherColorIndex(List<Color> colors) {
-        throw new NotImplementedException();
-        //return 0;
+    public void makeMove(Color color) throws GameOverException {
+        List<Color> colorsAvailable = getAvailableColors();
+        if (colorsAvailable.contains(color))
+            spielmaker.chooseColor(this, color);
+        else {
+            throw new GameOverException();
+        }
     }
+
 }
