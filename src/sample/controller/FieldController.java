@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import sample.Spielmaker;
+import sample.exceptions.ForbiddenColorException;
 import sample.exceptions.GameOverException;
 import sample.model.Color;
 import sample.model.player.ArtificialPlayer;
@@ -65,6 +66,9 @@ public class FieldController {
             refreshPlayingField();
             refreshPlayerScore();
 
+        } catch (ForbiddenColorException e) {
+
+            //MessageBox.showDialog("Message Here...");
         } catch (GameOverException e) {
             e.printStackTrace();
         }

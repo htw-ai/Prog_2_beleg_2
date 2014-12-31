@@ -1,6 +1,7 @@
 package sample.model.player;
 
 import sample.Spielmaker;
+import sample.exceptions.ForbiddenColorException;
 import sample.exceptions.GameOverException;
 import sample.model.Color;
 import sample.model.ColorField;
@@ -23,7 +24,7 @@ public abstract class Player {
      *
      * @return
      */
-    public abstract void makeMove(Color color) throws GameOverException;
+    public abstract void makeMove(Color color) throws GameOverException, ForbiddenColorException;
 
     protected List<Color> getAvailableColors(){
         List<Color> colors = new ArrayList<>();

@@ -1,5 +1,6 @@
 package sample.model.player;
 
+import sample.exceptions.ForbiddenColorException;
 import sample.exceptions.GameOverException;
 import sample.model.Color;
 
@@ -16,12 +17,12 @@ public class HumanPlayer extends Player {
      * @return
      */
     @Override
-    public void makeMove(Color color) throws GameOverException {
+    public void makeMove(Color color) throws GameOverException, ForbiddenColorException {
         List<Color> colorsAvailable = getAvailableColors();
         if (colorsAvailable.contains(color))
             spielmaker.chooseColor(this, color);
         else {
-            throw new GameOverException();
+            throw new ForbiddenColorException();
         }
     }
 
