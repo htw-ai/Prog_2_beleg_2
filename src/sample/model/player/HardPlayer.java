@@ -11,6 +11,10 @@ import java.util.List;
  */
 public class HardPlayer extends ArtificialPlayer {
 
+    public HardPlayer() {
+        this.name = "hard player";
+    }
+
     @Override
     protected Color chooseColor(List<Color> colors) throws GameOverException {
         int bestColorToChoose = 0, maxPoints = 0;

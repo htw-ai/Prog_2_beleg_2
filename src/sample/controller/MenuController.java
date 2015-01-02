@@ -29,13 +29,13 @@ public class MenuController {
 
         String radioBtn = ((RadioButton) opponent.getSelectedToggle()).getId();
         if (radioBtn.equals("playerRadBtn")){
-            player = new HumanPlayer();
+            player = new HumanPlayer("player 2");
             System.out.println("multiplayer mode enabled");
         } else if (radioBtn.equals("easyRadBtn")) {
-            player = new HardPlayer();
+            player = new EasyPlayer();
             System.out.println("easy mode enabled");
         } else if (radioBtn.equals("hardRadBtn")) {
-            player = new EasyPlayer();
+            player = new HardPlayer();
             System.out.println("hard mode enabled");
         }
 

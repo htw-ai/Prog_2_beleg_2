@@ -45,6 +45,8 @@ public class FieldController {
         colors.addAll(spielmaker.getColors());
         colorList.setItems(colors);
 
+       // ChangeListener listener = ((ov, old_val, new_val) -> goForIt((Color) new_val));
+
         colorList.getSelectionModel().selectedItemProperty().addListener(
                 (ov, old_val, new_val) -> goForIt((Color) new_val));
 
@@ -54,24 +56,50 @@ public class FieldController {
 
     private void goForIt(Color newColor){
         try {
-            System.out.println("Color changed to " + newColor.name());
+            System.out.println(spielmaker.getActivePlayer().getName() + " changed color to " + newColor.name());
 
             spielmaker.getActivePlayer().makeMove(newColor);
 
             if (spielmaker.getInactivePlayer() instanceof ArtificialPlayer)
                 (spielmaker.getInactivePlayer()).makeMove(null);
-            else
+            else {
                 spielmaker.switchActivePlayer();
+                colorList.getSelectionModel().clearSelection();
+            }
 
             refreshPlayingField();
             refreshPlayerScore();
 
         } catch (ForbiddenColorException e) {
-
+            System.out.println("choose another color, " + newColor.name() + " is not allowed");
             //MessageBox.showDialog("Message Here...");
         } catch (GameOverException e) {
-            e.printStackTrace();
+            System.out.println("Game over! there are no more moves possible");
+            displayWinner();
         }
+    }
+
+    private void displayWinner() {
+        boolean draw = spielmaker.getActivePlayer().getPoints() == spielmaker.getInactivePlayer().getPoints();
+        if (draw) {
+            System.out.println("Draw! Both players get " + spielmaker.getActivePlayer().getPoints() + "points");
+            playerOneBackground.setFill(javafx.scene.paint.Color.GREEN);
+            playerTwoBackground.setFill(javafx.scene.paint.Color.GREEN);
+        }else {
+            Player winner = spielmaker.getActivePlayer().getPoints() > spielmaker.getInactivePlayer().getPoints() ? spielmaker.getActivePlayer() : spielmaker.getInactivePlayer();
+            System.out.println("winner is " + winner.getName() + " with " + winner.getPoints() + " pts.");
+            if (winner == spielmaker.getPlayer1()){
+                playerOneBackground.setFill(javafx.scene.paint.Color.GREEN);
+                playerTwoBackground.setFill(javafx.scene.paint.Color.RED);
+            } else {
+                playerOneBackground.setFill(javafx.scene.paint.Color.RED);
+                playerTwoBackground.setFill(javafx.scene.paint.Color.GREEN);
+            }
+        }
+        playerOneBackground.setVisible(true);
+        playerTwoBackground.setVisible(true);
+        colorList.setDisable(true);
+        // getSelectionModel().selectedItemProperty().lis.removeListener();
     }
 
     private void refreshPlayerScore(){

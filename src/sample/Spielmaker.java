@@ -14,7 +14,7 @@ public class Spielmaker {
     private Random rnd = new Random();
 
     private ColorField[][] fields;
-    private Player player1 = new HumanPlayer();
+    private Player player1 = new HumanPlayer("player 1");
     private Player player2;
     private List<Color> colors;
 
@@ -65,14 +65,15 @@ public class Spielmaker {
     public List<ColorField> chooseColor(Player p, Color newColor){
         return chooseColor(p, newColor, false);
     }
-        /**
-         * returns the points a player receives when choosing a certain color.
-         * Can also update the fields on the edge of a players field range.
-         *
-         * @param newColor  the chosen color
-         * @param isTest    if true, updates the UI
-         * @return points a player receives for this certain color
-         */
+
+    /**
+     * returns the points a player receives when choosing a certain color.
+     * Can also update the fields on the edge of a players field range.
+     *
+     * @param newColor  the chosen color
+     * @param isTest    if true, updates the UI
+     * @return points a player receives for this certain color
+     */
     private List<ColorField> chooseColor(Player player, Color newColor, boolean isTest){
         List<ColorField> newFields = new ArrayList<>();
 

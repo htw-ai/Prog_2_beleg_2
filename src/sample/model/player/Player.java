@@ -19,6 +19,8 @@ public abstract class Player {
     private boolean isActive;
     protected List<ColorField> colorsHold;
 
+    protected String name;
+
     /**
      * returns the chosen color
      *
@@ -26,14 +28,17 @@ public abstract class Player {
      */
     public abstract void makeMove(Color color) throws GameOverException, ForbiddenColorException;
 
-    protected List<Color> getAvailableColors(){
+    protected List<Color> getAvailableColors() throws GameOverException {
         List<Color> colors = new ArrayList<>();
         spielmaker.getColors().forEach(c -> colors.add(c));
 
         //remove the currently active color
-        colors.remove(colorsHold.get(0).getColor());
+        colors.remove(spielmaker.getActivePlayer().getColorsHold().get(0).getColor());
         //remove the currently active color of the opponent player
-        //colors.remove(spielmaker.getInactivePlayer().getColorsHold().get(0).getColor());
+        colors.remove(spielmaker.getInactivePlayer().getColorsHold().get(0).getColor());
+
+        if (colors.size() <= 0)
+            throw new GameOverException();
 
         return colors;
     }
@@ -66,5 +71,9 @@ public abstract class Player {
 
     public void addColors(List<ColorField> colorsHold) {
         this.colorsHold.addAll(colorsHold);
+    }
+
+    public String getName() {
+        return name;
     }
 }

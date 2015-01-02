@@ -12,6 +12,10 @@ import java.util.Random;
 public class EasyPlayer extends ArtificialPlayer {
     Random rnd = new Random();
 
+    public EasyPlayer() {
+        this.name = "easy player";
+    }
+
 //    @Override
 //    public void makeMove()throws GameOverException{
 //        try {
