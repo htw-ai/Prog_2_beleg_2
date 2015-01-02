@@ -8,6 +8,8 @@ import java.util.Random;
 
 /**
  * Created by root on 27.11.14.
+ *
+ * An artificial player which randomly chooses colors.
  */
 public class EasyPlayer extends ArtificialPlayer {
     Random rnd = new Random();

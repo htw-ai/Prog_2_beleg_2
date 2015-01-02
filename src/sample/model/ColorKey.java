@@ -2,6 +2,8 @@ package sample.model;
 
 /**
  * Created by root on 17.12.14.
+ *
+ * representing a fields position
  */
 public class ColorKey {
     private int x;

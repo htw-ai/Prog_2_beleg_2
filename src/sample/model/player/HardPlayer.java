@@ -8,6 +8,8 @@ import java.util.List;
 
 /**
  * Created by root on 27.11.14.
+ *
+ * An artificial player which always tries to get the best score by checking each color.
  */
 public class HardPlayer extends ArtificialPlayer {
 

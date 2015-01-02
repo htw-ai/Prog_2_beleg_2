@@ -6,6 +6,8 @@ import sample.model.Color;
 import java.util.List;
 
 /**
+ * Abstract class extended by all unhuman players.
+ *
  * Created by Christoph on 30.12.2014.
  */
 public abstract class ArtificialPlayer extends Player {
@@ -21,5 +23,12 @@ public abstract class ArtificialPlayer extends Player {
         spielmaker.chooseColor(this, c);
     }
 
+    /**
+     * choosing a certain color by algorithm
+     *
+     * @param colors colors
+     * @return
+     * @throws GameOverException
+     */
     protected abstract Color chooseColor(List<Color> colors) throws GameOverException;
 }

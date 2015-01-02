@@ -45,8 +45,6 @@ public class FieldController {
         colors.addAll(spielmaker.getColors());
         colorList.setItems(colors);
 
-       // ChangeListener listener = ((ov, old_val, new_val) -> goForIt((Color) new_val));
-
         colorList.getSelectionModel().selectedItemProperty().addListener(
                 (ov, old_val, new_val) -> goForIt((Color) new_val));
 
@@ -54,6 +52,10 @@ public class FieldController {
         refreshPlayerScore();
     }
 
+    /**
+     * callback method which is called when one of the players changed his color
+     * @param newColor
+     */
     private void goForIt(Color newColor){
         try {
             System.out.println(spielmaker.getActivePlayer().getName() + " changed color to " + newColor.name());
@@ -72,13 +74,15 @@ public class FieldController {
 
         } catch (ForbiddenColorException e) {
             System.out.println("choose another color, " + newColor.name() + " is not allowed");
-            //MessageBox.showDialog("Message Here...");
         } catch (GameOverException e) {
             System.out.println("Game over! there are no more moves possible");
             displayWinner();
         }
     }
 
+    /**
+     * ends the game and names a winner
+     */
     private void displayWinner() {
         boolean draw = spielmaker.getActivePlayer().getPoints() == spielmaker.getInactivePlayer().getPoints();
         if (draw) {
@@ -102,6 +106,9 @@ public class FieldController {
         // getSelectionModel().selectedItemProperty().lis.removeListener();
     }
 
+    /**
+     * updates the labels which show the current score
+     */
     private void refreshPlayerScore(){
         scoreP1.setText(String.valueOf(spielmaker.getPlayer1().getPoints()));
         scoreP2.setText(String.valueOf(spielmaker.getPlayer2().getPoints()));
@@ -111,7 +118,7 @@ public class FieldController {
     }
 
     /**
-     * sets the colors of the playing field
+     * updates the colors of the playing field
      */
     private void refreshPlayingField(){
         playingField.getChildren().clear();
@@ -127,6 +134,12 @@ public class FieldController {
         }
     }
 
+    /**
+     * starting a new game by displaying the menu window
+     *
+     * @param actionEvent
+     * @throws Exception
+     */
     public void newGame(ActionEvent actionEvent) throws Exception{
         Node node=(Node) actionEvent.getSource();
         Stage stage=(Stage) node.getScene().getWindow();

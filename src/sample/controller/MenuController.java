@@ -7,7 +7,6 @@ import javafx.scene.Node;
 import javafx.scene.Scene;
 import javafx.scene.control.RadioButton;
 import javafx.scene.control.Slider;
-import javafx.scene.control.SplitPane;
 import javafx.scene.control.ToggleGroup;
 import javafx.stage.Stage;
 import sample.model.player.EasyPlayer;
@@ -15,6 +14,11 @@ import sample.model.player.HardPlayer;
 import sample.model.player.HumanPlayer;
 import sample.model.player.Player;
 
+/**
+ * Created by root on 26.11.14.
+ *
+ * controls the game
+ */
 public class MenuController {
 
     public Slider fieldsSlider;
@@ -43,7 +47,7 @@ public class MenuController {
         Stage stage = (Stage) node.getScene().getWindow();
 
         FXMLLoader loader = new FXMLLoader(getClass().getResource("../view/field.fxml"));
-        stage.setScene(new Scene((SplitPane) loader.load()));
+        stage.setScene(new Scene(loader.load()));
         FieldController controller = loader.getController();
         controller.init(fieldsCount, player, colorsCount);
 
