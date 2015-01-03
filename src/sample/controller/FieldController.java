@@ -13,6 +13,7 @@ import javafx.scene.layout.GridPane;
 import javafx.scene.shape.Rectangle;
 import javafx.stage.Stage;
 import sample.Spielmaker;
+import sample.exceptions.ForbiddenColorException;
 import sample.exceptions.GameOverException;
 import sample.model.Color;
 import sample.model.player.ArtificialPlayer;
@@ -51,25 +52,63 @@ public class FieldController {
         refreshPlayerScore();
     }
 
+    /**
+     * callback method which is called when one of the players changed his color
+     * @param newColor
+     */
     private void goForIt(Color newColor){
         try {
-            System.out.println("Color changed to " + newColor.name());
+            System.out.println(spielmaker.getActivePlayer().getName() + " changed color to " + newColor.name());
 
             spielmaker.getActivePlayer().makeMove(newColor);
 
             if (spielmaker.getInactivePlayer() instanceof ArtificialPlayer)
                 (spielmaker.getInactivePlayer()).makeMove(null);
-            else
+            else {
                 spielmaker.switchActivePlayer();
+                colorList.getSelectionModel().clearSelection();
+            }
 
             refreshPlayingField();
             refreshPlayerScore();
 
+        } catch (ForbiddenColorException e) {
+            System.out.println("choose another color, " + newColor.name() + " is not allowed");
         } catch (GameOverException e) {
-            e.printStackTrace();
+            System.out.println("Game over! there are no more moves possible");
+            displayWinner();
         }
     }
 
+    /**
+     * ends the game and names a winner
+     */
+    private void displayWinner() {
+        boolean draw = spielmaker.getActivePlayer().getPoints() == spielmaker.getInactivePlayer().getPoints();
+        if (draw) {
+            System.out.println("Draw! Both players get " + spielmaker.getActivePlayer().getPoints() + "points");
+            playerOneBackground.setFill(javafx.scene.paint.Color.GREEN);
+            playerTwoBackground.setFill(javafx.scene.paint.Color.GREEN);
+        }else {
+            Player winner = spielmaker.getActivePlayer().getPoints() > spielmaker.getInactivePlayer().getPoints() ? spielmaker.getActivePlayer() : spielmaker.getInactivePlayer();
+            System.out.println("winner is " + winner.getName() + " with " + winner.getPoints() + " pts.");
+            if (winner == spielmaker.getPlayer1()){
+                playerOneBackground.setFill(javafx.scene.paint.Color.GREEN);
+                playerTwoBackground.setFill(javafx.scene.paint.Color.RED);
+            } else {
+                playerOneBackground.setFill(javafx.scene.paint.Color.RED);
+                playerTwoBackground.setFill(javafx.scene.paint.Color.GREEN);
+            }
+        }
+        playerOneBackground.setVisible(true);
+        playerTwoBackground.setVisible(true);
+        colorList.setDisable(true);
+        // getSelectionModel().selectedItemProperty().lis.removeListener();
+    }
+
+    /**
+     * updates the labels which show the current score
+     */
     private void refreshPlayerScore(){
         scoreP1.setText(String.valueOf(spielmaker.getPlayer1().getPoints()));
         scoreP2.setText(String.valueOf(spielmaker.getPlayer2().getPoints()));
@@ -79,7 +118,7 @@ public class FieldController {
     }
 
     /**
-     * sets the colors of the playing field
+     * updates the colors of the playing field
      */
     private void refreshPlayingField(){
         playingField.getChildren().clear();
@@ -95,6 +134,12 @@ public class FieldController {
         }
     }
 
+    /**
+     * starting a new game by displaying the menu window
+     *
+     * @param actionEvent
+     * @throws Exception
+     */
     public void newGame(ActionEvent actionEvent) throws Exception{
         Node node=(Node) actionEvent.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
