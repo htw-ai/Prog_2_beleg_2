@@ -19,6 +19,8 @@ import sample.model.Color;
 import sample.model.player.ArtificialPlayer;
 import sample.model.player.Player;
 
+import java.io.IOException;
+
 
 /**
  * Created by dudzik on 26.11.14.
@@ -48,19 +50,25 @@ public class FieldController {
         colorList.getSelectionModel().selectedItemProperty().addListener(
                 (ov, old_val, new_val) -> goForIt((Color) new_val));
 
+        if (spielmaker.getActivePlayer() instanceof ArtificialPlayer)
+            goForIt(null);
+
         refreshPlayingField();
         refreshPlayerScore();
     }
 
     /**
      * callback method which is called when one of the players changed his color
-     * @param newColor
+     * @param newColor the new color a player selected
      */
     private void goForIt(Color newColor){
         try {
-            System.out.println(spielmaker.getActivePlayer().getName() + " changed color to " + newColor.name());
-
-            spielmaker.getActivePlayer().makeMove(newColor);
+            if(spielmaker.getActivePlayer() instanceof ArtificialPlayer) {
+                ((ArtificialPlayer) spielmaker.getActivePlayer()).makeMove();
+            }else{
+                System.out.println(spielmaker.getActivePlayer().getName() + " changed color to " + newColor.name());
+                spielmaker.getActivePlayer().makeMove(newColor);
+            }
 
             if (spielmaker.getInactivePlayer() instanceof ArtificialPlayer)
                 (spielmaker.getInactivePlayer()).makeMove(null);
@@ -137,13 +145,13 @@ public class FieldController {
     /**
      * starting a new game by displaying the menu window
      *
-     * @param actionEvent
-     * @throws Exception
+     * @param actionEvent   ActionEvent
+     * @throws IOException  when some resources cannot be loaded
      */
-    public void newGame(ActionEvent actionEvent) throws Exception{
+    public void newGame(ActionEvent actionEvent) throws IOException {
         Node node=(Node) actionEvent.getSource();
         Stage stage=(Stage) node.getScene().getWindow();
-        Parent root = FXMLLoader.load(getClass().getResource("../view/menu.fxml"));/* Exception */
+        Parent root = FXMLLoader.load(getClass().getResource("../view/menu.fxml"));
         Scene scene = new Scene(root);
         stage.setScene(scene);
         stage.show();

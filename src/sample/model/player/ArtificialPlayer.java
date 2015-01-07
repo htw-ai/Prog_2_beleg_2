@@ -27,8 +27,8 @@ public abstract class ArtificialPlayer extends Player {
      * choosing a certain color by algorithm
      *
      * @param colors colors
-     * @return
-     * @throws GameOverException
+     * @return the prefered color of the player
+     * @throws GameOverException if no move is possible
      */
     protected abstract Color chooseColor(List<Color> colors) throws GameOverException;
 }

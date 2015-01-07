@@ -1,6 +1,7 @@
 package sample;
 
 import sample.model.*;
+import sample.model.player.ArtificialPlayer;
 import sample.model.player.HumanPlayer;
 import sample.model.player.Player;
 
@@ -59,7 +60,10 @@ public class Spielmaker {
             }
         }
 
-        player1.setActive(true);
+        if(player2 instanceof ArtificialPlayer)
+            player1.setActive(true);
+        else
+            player2.setActive(true);
 
         ColorField firstField = fields[0][0];
         ColorField lastField = fields[fieldCount -1][fieldCount -1 ];

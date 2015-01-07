@@ -22,16 +22,18 @@ public abstract class Player {
     protected String name;
 
     /**
-     * returns the chosen color
      *
+     * @param color                     the preferred color which should
+     * @throws GameOverException        if no more move is possible
+     * @throws ForbiddenColorException  if the chosen color cannot be chosen
      */
     public abstract void makeMove(Color color) throws GameOverException, ForbiddenColorException;
 
     /**
      * gets all colors a player can choose
      *
-     * @return
-     * @throws GameOverException
+     * @return                      the available colors
+     * @throws GameOverException    if no more move is possible
      */
     protected List<Color> getAvailableColors() throws GameOverException {
         List<Color> colors = new ArrayList<>();
@@ -51,9 +53,9 @@ public abstract class Player {
      * Checks if there is at least one color to choose, if not a GameOverException will be thrown.
      * Also removes colors that wouldn't change the score
      *
-     * @param colors
-     * @return
-     * @throws GameOverException
+     * @param colors                all colors that are available
+     * @return                      the set of colors a player can chose
+     * @throws GameOverException    if no more move is possible
      */
     protected List<Color> testIfGameIsOver(List<Color> colors) throws GameOverException {
         boolean flag = false;
@@ -76,7 +78,7 @@ public abstract class Player {
 
     /**
      * sets the Spielmaker attribute for all players
-     * @param spielmaker
+     * @param spielmaker Spielmaker
      */
     public static void SetSpielmaker(Spielmaker spielmaker) {
         Player.spielmaker = spielmaker;
@@ -101,7 +103,7 @@ public abstract class Player {
     /**
      * initializes the color fields and sets the fist item
      *
-     * @param colorField
+     * @param colorField the first colorField
      */
     public void initColorsHold(ColorField colorField){
         colorsHold = new ArrayList<ColorField>(){{
